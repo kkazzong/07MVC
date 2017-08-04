@@ -66,7 +66,14 @@
 	<bean id="logonCheckInterceptor"	class="com.model2.mvc.common.web.LogonCheckInterceptor" />
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->		           
 
-
+	
+	<!-- //////////multi-part data ///////////// -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	
+		<property name="maxUploadSize" value="100000000"/>
+		
+	</bean>
+	
 	<!--  :: ViewResolver 선언 -->	
     <bean id="viewResolver"
 				class="org.springframework.web.servlet.view.InternalResourceViewResolver" />

@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model2.mvc.common.Page;
@@ -64,6 +68,12 @@ public class ProductController {
 		return modelAndView;
 	}*/
 	
+	/*
+	 *
+	 *
+	 * 파일 업로드 (예전)
+	 *
+	 *
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
 	public ModelAndView addProduct(HttpSession session,
 															HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -73,11 +83,11 @@ public class ProductController {
 		ModelAndView modelAndView = new ModelAndView();
 		
 		if(FileUpload.isMultipartContent(request)) {
-			/*C:\\Users\\1\\git\\07MVC\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles\\*/
+			C:\\Users\\1\\git\\07MVC\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles\\
 //			String temDir = "c:\\workspace\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles\\";
 			String temDir = "C:\\Users\\1\\git\\07MVC\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles\\";
-			/*C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core*/
-			/*C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\07.Model2MVCShop(URI,pattern)\\images\\uploadFiles\\*/
+			C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core
+			C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\07.Model2MVCShop(URI,pattern)\\images\\uploadFiles\\
 //			String temDir = "C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\07.Model2MVCShop(URI,pattern)\\images\\uploadFiles\\";
 			String path = session.getServletContext().getRealPath("/");
 			System.out.println(path);
@@ -160,9 +170,47 @@ public class ProductController {
 		
 		modelAndView.setViewName("/product/addProduct.jsp");
 		return modelAndView;
+	}*/
+	
+	@RequestMapping(value="addProduct", method=RequestMethod.POST)
+	public ModelAndView addProduct(@ModelAttribute("product") Product product,
+														@RequestParam("uploadFile") MultipartFile multipartFile,
+														HttpSession session) throws Exception {
+		
+		//web.xml에 등록한 가상의 저장소 위치임
+		String path = session.getServletContext().getInitParameter("saveDirectory"); 
+		
+		//session에서 얻은 realPath (산골짜기에 저장..)
+		String realPath = session.getServletContext().getRealPath(path);
+		
+		//client가 업로드한 파일의 이름
+		String fileName = multipartFile.getOriginalFilename();
+		
+		product.setManuDate(product.getManuDate().replaceAll("-", ""));
+		product.setFileName(fileName);
+		System.out.println(product);
+		
+		File file = new File(realPath, fileName);
+		if(file.exists()) {
+			System.out.println("파일존재함");
+			System.out.println("filePath : "+file.getAbsolutePath());
+		} else {
+			System.out.println("파일 존재하지 않음");
+		}
+		multipartFile.transferTo(file);
+		
+		productService.addProduct(product);
+		
+		/*MultipartFile file = multipartRequest.getFile("fileName");
+		
+		String fileName = file.getOriginalFilename();
+		String path = session.getServletContext().getInitParameter("saveDirectory");
+		
+		System.out.println("path:"+path);*/
+		
+		
+		return new ModelAndView("/product/addProduct.jsp", "product", product);
 	}
-	
-	
 	
 //	@RequestMapping("listProduct.do")
 //	@RequestMapping(value="listProduct/{menu}")
