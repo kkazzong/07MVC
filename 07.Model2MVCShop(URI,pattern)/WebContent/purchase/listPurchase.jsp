@@ -29,7 +29,8 @@ function fncGetList(currentPage) {
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/listPurchase.do" method="post">
+<!-- <form name="detailForm" action="/listPurchase.do" method="post"> -->
+<form name="detailForm" action="/purchase/listPurchase" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -94,7 +95,8 @@ function fncGetList(currentPage) {
 		<%-- <td align="left">${purchase.buyer.userName }</td> --%>
 		<c:choose>
 			<c:when test="${purchase.tranCode == 1}">
-				<td align="left"><a href="/getProduct.do?prodNo=${purchase.purchaseProd.prodNo}&menu=search&tranNo=${purchase.tranNo}">${purchase.purchaseProd.prodName}</a></td>
+				<%-- <td align="left"><a href="/getProduct.do?prodNo=${purchase.purchaseProd.prodNo}&menu=search&tranNo=${purchase.tranNo}">${purchase.purchaseProd.prodName}</a></td> --%>
+				<td align="left"><a href="/product/getProduct?prodNo=${purchase.purchaseProd.prodNo}&menu=search&tranNo=${purchase.tranNo}">${purchase.purchaseProd.prodName}</a></td>
 				<td></td>
 			</c:when>
 			<c:otherwise>
@@ -145,7 +147,8 @@ function fncGetList(currentPage) {
 		<td></td>
 		<c:if test="${purchase.tranCode == 2 }">
 		<td align="left">
-						<a href="updateTranCode.do?tranNo=${purchase.tranNo}&tranCode=3">¹°°ÇµµÂø</a>
+						<%-- <a href="updateTranCode.do?tranNo=${purchase.tranNo}&tranCode=3">¹°°ÇµµÂø</a> --%>
+						<a href="/purchase/updateTranCode?tranNo=${purchase.tranNo}&tranCode=3">¹°°ÇµµÂø</a>
 		</td>
 		</c:if>
 	</tr>

@@ -23,7 +23,8 @@ function fncGetList(currentPage) {
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listSale.do?menu=${param.menu}" method="post">
+<%-- <form name="detailForm" action="/listSale.do?menu=${param.menu}" method="post"> --%>
+<form name="detailForm" action="/purchase/listSale?menu=${param.menu}" method="post">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
@@ -111,7 +112,8 @@ function fncGetList(currentPage) {
 		<c:if test="${param.menu == 'manage'}">
 			<c:choose>
 				<c:when test="${purchase.tranCode == 1}">
-					구매완료 <a href="/updateTranCodeByProd.do?prodNo=${purchase.purchaseProd.prodNo}&tranCode=2">배송하기</a>
+					<%-- 구매완료 <a href="/updateTranCodeByProd.do?prodNo=${purchase.purchaseProd.prodNo}&tranCode=2">배송하기</a> --%>
+					구매완료 <a href="/purchase/updateTranCodeByProd?prodNo=${purchase.purchaseProd.prodNo}&tranCode=2">배송하기</a>
 				</c:when>
 				<c:when test="${purchase.tranCode == 2}">
 					배송중

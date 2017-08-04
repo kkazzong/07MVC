@@ -11,8 +11,8 @@
 		FROM product
 	</sql> -->
 	<resultMap type="com.model2.mvc.service.domain.Purchase" id="selectPurchaseMap">
-		<result property="tranNo" column="tran_no" jdbcType="NUMERIC"/>
-		<result property="tranCode" column="tran_code" jdbcType="NUMERIC"/>
+		<id property="tranNo" column="tran_no" jdbcType="NUMERIC"/>
+		<result property="tranCode" column="tran_code" jdbcType="VARCHAR"/>
 		<result property="receiverName" column="receiver_name" jdbcType="VARCHAR"/>
 		<result property="receiverPhone" column="receiver_phone" jdbcType="VARCHAR"/>
 		<result property="receiverAddr" column="receiver_addr" jdbcType="VARCHAR"/>
@@ -51,7 +51,7 @@
 	
 	<select id="getPurchase" parameterType="int" resultMap="selectPurchaseMap">
 		SELECT
-		p.prod_no, p.prod_name, t.tran_no, t.receiver_name, t.tran_code, t.payment_option, 
+		p.prod_no, p.prod_name, t.receiver_name, t.tran_no, t.tran_code, t.payment_option, 
 		t.receiver_phone, t.receiver_addr, t.receiver_request, t.buyer_id AS user_id
 		,TO_CHAR(t.receiver_date,'yyyymmdd') receiver_date
 		FROM product p, transaction t

@@ -115,7 +115,7 @@ function fncGetList2(currentPage) {
 					</td>
 					<c:if test="${search.searchSoldProd == 1}">
 						<%-- <a href="/listProduct.do?menu=${param.menu}&currentPage=1">第肺</a> --%>
-						<a href="/purchase/listProduct?menu=${param.menu}&currentPage=1">第肺</a>
+						<a href="/product/listProduct?menu=${param.menu}&currentPage=1">第肺</a>
 						<%-- <a href="/purchase/listProduct?${menu}/${search.currentPage}">第肺</a> --%>
 					</c:if>
 				</c:if>

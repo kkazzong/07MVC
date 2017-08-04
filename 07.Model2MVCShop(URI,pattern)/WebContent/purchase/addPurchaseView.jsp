@@ -28,8 +28,8 @@ function fncAddPurchase() {
 
 <body>
 
-<form name="addPurchase" method="post" action="/addPurchase.do">
-
+<!-- <form name="addPurchase" method="post" action="/addPurchase.do"> -->
+<form name="addPurchase" method="post" action="/purchase/addPurchase">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
@@ -50,7 +50,7 @@ function fncAddPurchase() {
 </table>
 
 <!-- <input type="hidden" name="prodNo" value="<%--= product.getProdNo() --%>" />-->
-<input type="hidden" name="prodNo" value="${product.prodNo}" />
+<input type="hidden" name="purchaseProd.prodNo" value="${product.prodNo}" />
 <table width="600" border="0" cellspacing="0" cellpadding="0"	align="center" style="margin-top: 13px;">
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -128,8 +128,8 @@ function fncAddPurchase() {
 		<td bgcolor="D6D6D6" width="1"></td>
 		<!-- <td class="ct_write01"><%--= user.getUserId() --%></td>
 		<input type="hidden" name="buyerId" value="<%--= user.getUserId() --%>" />-->
+		<input type="hidden" name="buyer.userId" value="${user.userId }" />
 		<td class="ct_write01">${user.userId }</td>
-		<input type="hidden" name="buyerId" value="${user.userId }" />
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
