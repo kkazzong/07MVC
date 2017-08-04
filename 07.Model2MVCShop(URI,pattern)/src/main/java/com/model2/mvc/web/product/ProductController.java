@@ -147,35 +147,39 @@ public class ProductController {
 //			response.addCookie(new Cookie("history", value));
 		}
 		
-		/*CookieGenerator cookieGenerator = new CookieGenerator();
+		/*
+		 * 
+		 * CookieGenerator
+		CookieGenerator cookieGenerator = new CookieGenerator();
 		cookieGenerator.setCookieName("history");
 		cookieGenerator.setCookiePath("/");
 		cookieGenerator.addCookie(response, prodNo+",");
 		Cookie[] cookies = request.getCookies();
 		for(int i = 0; i < cookies.length; i++) {
 			System.out.println(cookies[i].getName());
-		}*/
-		/*if(history == null) {
+		}
+		*/
+		
+		/*
+		 * 
+		 * Original
+		if(history == null) {
 			System.out.println("ÄíÅ°¾ø¿ò");
 			Cookie cookie = new Cookie("history", prodNo+",");
 			response.addCookie(cookie);
 		} else {
 			System.out.println("ÄíÅ°ÀÖ¿ò");
 			response.addCookie(new Cookie("history", history+prodNo+","));
-		}*/
-//		System.out.println(history);
-		/*Cookie[] cookie = request.getCookies();
-		if(cookie != null && cookie.length > 0) {
-			for(int i = 0; i < cookie.length; i++) {
-				if(cookie[i].getName().equals("history")) {
-					response.addCookie(new Cookie("history", cookie[i].getValue()+prodNo+","));
-				} else {
-					response.addCookie(new Cookie("history", prodNo+","));
-				}
-			}
-		}*/
+		}
+		*/
 		
-		/*Cookie[] cookies = request.getCookies();
+		
+		/*
+		 * 
+		 * request, response
+		 * 
+		 * 
+		Cookie[] cookies = request.getCookies();
 		if(cookies == null) {
 			Cookie cookie = new Cookie("history", prodNo+",");
 			cookie.setMaxAge(-1);
