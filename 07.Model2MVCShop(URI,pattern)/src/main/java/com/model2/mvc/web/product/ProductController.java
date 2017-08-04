@@ -1,23 +1,29 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.DiskFileUpload;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.CookieGenerator;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -43,7 +49,7 @@ public class ProductController {
 	}
 	
 //	@RequestMapping("addProduct.do")
-	@RequestMapping(value="addProduct", method=RequestMethod.POST)
+	/*@RequestMapping(value="addProduct", method=RequestMethod.POST)
 	public ModelAndView addProduct(@ModelAttribute("product") Product product) throws Exception {
 		
 		System.out.println("@ addProduct @");
@@ -56,7 +62,107 @@ public class ProductController {
 		modelAndView.setViewName("/product/addProduct.jsp");
 		
 		return modelAndView;
+	}*/
+	
+	@RequestMapping(value="addProduct", method=RequestMethod.POST)
+	public ModelAndView addProduct(HttpSession session,
+															HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		System.out.println("@ addProduct @");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		if(FileUpload.isMultipartContent(request)) {
+			/*C:\\Users\\1\\git\\07MVC\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles\\*/
+//			String temDir = "c:\\workspace\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles\\";
+			String temDir = "C:\\Users\\1\\git\\07MVC\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles\\";
+			/*C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core*/
+			/*C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\07.Model2MVCShop(URI,pattern)\\images\\uploadFiles\\*/
+//			String temDir = "C:\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\07.Model2MVCShop(URI,pattern)\\images\\uploadFiles\\";
+			String path = session.getServletContext().getRealPath("/");
+			System.out.println(path);
+			DiskFileUpload fileUpload = new DiskFileUpload();
+			fileUpload.setRepositoryPath(temDir);
+			fileUpload.setSizeMax(1024 * 1024 * 10);
+			fileUpload.setSizeThreshold(1024 * 100);
+			
+			if(request.getContentLength() < fileUpload.getSizeMax()) {
+				
+				Product product = new Product();
+				
+				StringTokenizer token = null;
+				
+				List fileItemList = fileUpload.parseRequest(request);
+				int size = fileItemList.size();
+				
+				for(int i = 0; i < size; i++) {
+					
+					FileItem fileItem = (FileItem)fileItemList.get(i);
+					
+					if(fileItem.isFormField()) { //파라미터
+						
+						if(fileItem.getFieldName().equals("manuDate")) { //menuDate '-'처리
+							
+							token = new StringTokenizer(fileItem.getString("euc-kr"), "-");
+							String manuDate = token.nextToken() + token.nextToken() + token.nextToken();
+							product.setManuDate(manuDate);
+							
+						} else if(fileItem.getFieldName().equals("prodName")) {
+							product.setProdName(fileItem.getString("euc-kr"));
+						} else if(fileItem.getFieldName().equals("prodDetail")) {
+							product.setProdDetail(fileItem.getString("euc-kr"));
+						} else if(fileItem.getFieldName().equals("price")) {
+							product.setPrice(Integer.parseInt(fileItem.getString("euc-kr")));
+						} 
+						
+					} else { //파일형식
+						
+						if(fileItem.getSize() > 0) {
+							
+							int idx = fileItem.getName().lastIndexOf("\\");
+							
+							if(idx == -1) { // Unix,,,.?
+								idx = fileItem.getName().lastIndexOf("/");
+							}
+							
+							String fileName = fileItem.getName().substring(idx+1);
+							product.setFileName(fileName);
+							try {
+								File uploadedFile = new File(temDir, fileName);
+								fileItem.write(uploadedFile);
+							} catch(IOException e) {
+								System.out.println(e);
+							}
+						}
+					}
+				}
+				
+				productService.addProduct(product);
+				
+//				ModelAndView modelAndView = new ModelAndView();
+				modelAndView.addObject("product", product);
+				modelAndView.setViewName("/product/addProduct.jsp");
+				
+			} else { //size 큰 경우
+				
+				int overSize = (request.getContentLength() / 1000000);
+				
+				System.out.println("<script>alert('파일크기는 1MB입니다.. 올리신 파일 용량 크기는 "+overSize+"MB입니다</script>");
+			}
+			
+		} else {
+			
+			System.out.println("인코딩 타입이 multipart/form-data가 아닙니다");
+			
+		}
+		
+		
+		
+		modelAndView.setViewName("/product/addProduct.jsp");
+		return modelAndView;
 	}
+	
+	
 	
 //	@RequestMapping("listProduct.do")
 //	@RequestMapping(value="listProduct/{menu}")

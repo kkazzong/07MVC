@@ -103,7 +103,7 @@
 				<tr>
 					<td height="26">
 						<%--<img src="<%= product.getFileName() %>"/> --%>
-						<img src="${product.fileName }"/> 
+						<img src = "../images/uploadFiles/${product.fileName}"/>
 					</td>
 				</tr>
 			</table>
