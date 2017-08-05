@@ -16,4 +16,6 @@ public interface ProductDAO {
 	public List<Product> getProductList(Search search) throws Exception;
 	
 	public int getCount(Search search) throws Exception;
+	
+	public int deleteProduct(int prodNo) throws Exception;
 }

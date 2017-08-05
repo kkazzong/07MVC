@@ -34,7 +34,7 @@ public class ProductTest {
 	@Qualifier("productDAOImpl")
 	private ProductDAO productDAO;
 	
-	@Test
+//	@Test
 	public void testInsertProduct() throws Exception {
 		
 		Product product = new Product();
@@ -139,6 +139,22 @@ public class ProductTest {
 		System.out.println("===============================");
 		System.out.println("totalCount : : : "+map.get("totalCount"));
 		System.out.println("===============================");
+		
+	}
+
+//	@Test
+	public void testDeleteProduct() throws Exception {
+		
+		int prodNo = 10113;
+		
+		Product product = productDAO.getProduct(prodNo);
+		
+		Assert.assertEquals(10113, product.getProdNo());
+		
+		int complete = productService.deleteProduct(prodNo);
+		
+		
+		Assert.assertEquals(1, complete);
 		
 	}
 }

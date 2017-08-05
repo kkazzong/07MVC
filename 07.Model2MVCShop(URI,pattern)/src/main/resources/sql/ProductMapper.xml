@@ -180,4 +180,10 @@
 					</if>) countTable
 	</select>
 	
+	<delete id="deleteProduct" parameterType="int">
+		DELETE
+		FROM product
+		WHERE prod_no = #{value}
+	</delete>
+	
 </mapper>

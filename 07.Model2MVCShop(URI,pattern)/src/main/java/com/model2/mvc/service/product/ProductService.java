@@ -15,4 +15,5 @@ public interface ProductService {
 	
 	public Map<String, Object> getProductList(Search search) throws Exception;
 	
+	public int deleteProduct(int prodNo) throws Exception;
 }

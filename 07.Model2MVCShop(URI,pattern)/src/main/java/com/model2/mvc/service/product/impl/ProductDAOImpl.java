@@ -50,7 +50,14 @@ public class ProductDAOImpl implements ProductDAO {
 		return sqlSession.selectOne("ProductMapper.getCount", search);
 	}
 	
+	@Override
+	public int deleteProduct(int prodNo) throws Exception {
+		return sqlSession.delete("ProductMapper.deleteProduct", prodNo);
+	}
+	
+	
  	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+
 }

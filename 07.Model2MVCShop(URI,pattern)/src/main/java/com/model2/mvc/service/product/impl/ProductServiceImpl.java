@@ -51,9 +51,15 @@ public class ProductServiceImpl implements ProductService {
 		return map;
 	}
 	
+	@Override
+	public int deleteProduct(int prodNo) throws Exception {
+		return productDAO.deleteProduct(prodNo);
+	}
+	
 	public void setProductDAO(ProductDAO productDAO) {
 		this.productDAO = productDAO;
 	}
+
 	
 	
 }

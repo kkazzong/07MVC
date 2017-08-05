@@ -405,4 +405,16 @@ public class ProductController {
 		
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="deleteProduct")
+	public ModelAndView deleteProduct(@RequestParam("prodNo") int prodNo) throws Exception {
+		
+		System.out.println("deleteProduct");
+		productService.deleteProduct(prodNo);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("/product/listProduct?menu=manage");
+		
+		return modelAndView;
+	}
 }

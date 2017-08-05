@@ -30,6 +30,7 @@
 <!--
 function fncGetList(currentPage) {
 	document.getElementById("currentPage").value = currentPage;
+	document.detailForm.action="/product/listProduct?menu=${param.menu}"
    	document.detailForm.submit();		
 }
 
@@ -49,6 +50,17 @@ function fncGetList2(currentPage) {
 	fncGetList(currentPage);
 }
 
+function fncDeleteProduct(currentPage) {
+	if(confirm("정말 삭제하시겠습니까?") == true) {
+		document.getElementById("currentPage").value = currentPage;
+		document.detailForm.action="/product/deleteProduct";
+		document.detailForm.submit();
+	} else {
+		return;
+	}
+	
+}
+
 -->
 </script>
 </head>
@@ -60,7 +72,7 @@ function fncGetList2(currentPage) {
 
 <!-- form name="detailForm" action="/listProduct.do?menu=<%--=menu--%>" method="post"-->
 <%-- <form name="detailForm" action="/listProduct.do?menu=${param.menu}" method="post"> --%>
-<form name="detailForm" action="/product/listProduct?menu=${param.menu}" method="post">
+<form name="detailForm"  method="post">
 <%-- <form name="detailForm" action="/product/listProduct/${menu}" method="post"> --%>
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -187,10 +199,14 @@ function fncGetList2(currentPage) {
 		<td class="ct_line02"></td>
 		<c:if test="${param.menu == 'manage'}">
 		<%-- <c:if test="${menu == 'manage'}"> --%>
-		<td class="ct_list_b">등록일</td>	
+		<td class="ct_list_b"  width="150">등록일</td>	
+		<td class="ct_line02"></td>
+		<td class="ct_list_b"  width="150">변경</td>	
 		<td class="ct_line02"></td>
 		</c:if>
-		<td class="ct_list_b">현재상태</td>	
+		<td class="ct_list_b"  width="150">현재상태</td>	
+		<td class="ct_line02"></td>
+		
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -207,34 +223,44 @@ function fncGetList2(currentPage) {
 	<tr class="ct_list_pop">
 		<!-- <td align="center"><%--= no--%></td> -->
 		<c:set var="i" value="${i+1}"/>
+		<c:if test="${param.menu == 'manage'}">
+		<td align="center"><%-- ${i} --%>${product.prodNo}</td>
+		</c:if>
+		<c:if test="${param.menu == 'search'}">
 		<td align="center">${i}</td>
+		</c:if>
 		<td></td>
 		<%--if(proTranCode.equals("0")) {--%>
 		
 			<c:choose>
 				<c:when test="${product.proTranCode == '0' or product.proTranCode == null }">
-					<td align="left"><a href="/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a></td>
+					<td align="center"><a href="/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}">${product.prodName}</a></td>
 					<%-- <td align="left"><a href="/product/getProduct/${product.prodNo}/${menu}">${product.prodName}</a></td> --%>
 				</c:when>
 		<%--} else {--%>
 				<c:otherwise>
 					<!-- <td align="left"><%--= product.getProdName() --%></td> -->
-					<td align="left">${product.prodName}</td>
+					<td align="center">${product.prodName}</td>
 				</c:otherwise>
 			</c:choose>
 		<%--} --%>
 		
 		<td></td>
 		<!-- <td align="left"><%--= product.getPrice() --%></td> -->
-		<td align="left">${product.price}</td>
+		<td align="center">${product.price} 원</td>
 		<td></td>
 		<!-- <td align="left"><%--= product.getRegDate() --%></td> -->
 		<c:if test="${param.menu == 'manage'}">
 		<%-- <c:if test="${menu == 'manage'}"> --%>
-		<td align="left">${product.regDate}</td>
+		<td align="center">${product.regDate}</td>
 		<td></td>
+		<!--  삭제버튼 -->
+	<td align="center">
+	<a href="/product/deleteProduct?prodNo=${product.prodNo}"><input type="button" value="삭제" onclick="confirm('삭제하시겠습니까?')"></a>
+	</td>
+	<td></td>
 		</c:if>
-		<td align="left">
+		<td align="center">
 		
 		${product.proTranCode}
 		<c:if test="${param.menu == 'manage'}">
@@ -267,10 +293,17 @@ function fncGetList2(currentPage) {
 			</c:choose>
 		</c:if>
 		</td>	
+	
+	
 	</tr>
+	
+	
+	
 	<tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
 	</tr>	
+	
+	
 	<%-- } --%>
 	</c:forEach>
 </table>
