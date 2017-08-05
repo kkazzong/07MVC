@@ -175,14 +175,18 @@ public class ProductController {
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
 	public ModelAndView addProduct(@ModelAttribute("product") Product product,
 														@RequestParam("uploadFile") MultipartFile multipartFile,
+														/*@Value("#{pathProperties.['path']}") String realPath,*/
 														HttpSession session) throws Exception {
 		
 		//web.xml에 등록한 가상의 저장소 위치임
+//		String realPath = session.getServletContext().getInitParameter("saveDirectory"); 
 		String path = session.getServletContext().getInitParameter("saveDirectory"); 
 		
 		//session에서 얻은 realPath (산골짜기에 저장..)
 		String realPath = session.getServletContext().getRealPath(path);
 		
+		
+//		System.out.println(realPath);
 		//client가 업로드한 파일의 이름
 		String fileName = multipartFile.getOriginalFilename();
 		

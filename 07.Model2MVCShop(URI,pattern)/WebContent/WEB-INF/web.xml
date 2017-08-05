@@ -24,6 +24,7 @@
 	<!--  파일 저장 장소 -->
 	<context-param>
 		<param-name>saveDirectory</param-name>
+		<!-- <param-value>C:\\Users\\1\\git\\07MVC\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles\\</param-value> -->
 		<param-value>\\images\\uploadFiles\\</param-value>
 	</context-param>
 		
