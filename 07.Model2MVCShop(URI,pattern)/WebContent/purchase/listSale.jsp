@@ -34,7 +34,7 @@ function fncGetList(currentPage) {
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 				<c:if test="${param.menu == 'manage'}">
-					<td width="93%" class="ct_ttl01">판매 목록 조회</td>
+					<td width="93%" class="ct_ttl01">배송 관리</td>
 					</td>
 				</c:if>
 				</tr>

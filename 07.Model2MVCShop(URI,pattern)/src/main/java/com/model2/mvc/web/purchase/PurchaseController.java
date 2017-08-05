@@ -117,9 +117,10 @@ public class PurchaseController {
 		
 		
 		Map<String, Object> map = purchaseService.getSaleList(search);
+		System.out.println(map.get("saleList"));
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-
+		
 		model.addAttribute("list", map.get("saleList"));
 		model.addAttribute("resultPage", resultPage);
 		
@@ -140,7 +141,7 @@ public class PurchaseController {
 		
 		purchaseService.updateTranCode(purchase);
 		
-		return "/product/listProduct?menu=manage";
+		return "/purchase/listSale?menu=manage";
 	}
 	
 //	@RequestMapping("updateTranCode.do")
