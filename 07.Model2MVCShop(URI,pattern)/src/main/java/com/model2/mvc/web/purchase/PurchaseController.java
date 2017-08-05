@@ -72,7 +72,7 @@ public class PurchaseController {
 		
 		purchase = purchaseService.addPurchase(purchase);
 		System.out.println(purchase);
-		
+		model.addAttribute(purchase);
 		return "/purchase/addPurchase.jsp";
 	}
 

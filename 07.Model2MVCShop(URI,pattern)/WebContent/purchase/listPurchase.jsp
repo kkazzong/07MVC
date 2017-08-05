@@ -96,7 +96,7 @@ function fncGetList(currentPage) {
 		<c:choose>
 			<c:when test="${purchase.tranCode == 1}">
 				<%-- <td align="left"><a href="/getProduct.do?prodNo=${purchase.purchaseProd.prodNo}&menu=search&tranNo=${purchase.tranNo}">${purchase.purchaseProd.prodName}</a></td> --%>
-				<td align="left"><a href="/product/getProduct?prodNo=${purchase.purchaseProd.prodNo}&menu=search&tranNo=${purchase.tranNo}">${purchase.purchaseProd.prodName}</a></td>
+				<td align="left"><a href="/purchase/updatePurchaseView?tranNo=${purchase.tranNo}">${purchase.purchaseProd.prodName}</a></td>
 				<td></td>
 			</c:when>
 			<c:otherwise>

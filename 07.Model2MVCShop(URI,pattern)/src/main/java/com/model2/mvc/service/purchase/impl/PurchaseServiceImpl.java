@@ -33,6 +33,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return purchaseDAO.getPurchase(tranNo);
 	}
 
+//	@Override
+//	public Purchase getPurchaseByProdNo(Purchase purchase) throws Exception {
+//		return purchaseDAO.getPurchaseByProdNo(purchase);
+//	}
+	
 	@Override
 	public Purchase getPurchaseByProdNo(int prodNo) throws Exception {
 		return purchaseDAO.getPurchaseByProdNo(prodNo);
@@ -73,5 +78,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public void setPurchaseDAO(PurchaseDAO purchaseDAO) {
 		this.purchaseDAO = purchaseDAO;
 	}
+
 	
 }

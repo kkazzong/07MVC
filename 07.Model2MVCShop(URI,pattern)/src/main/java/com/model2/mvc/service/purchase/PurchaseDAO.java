@@ -14,6 +14,7 @@ public interface PurchaseDAO {
 	public Purchase getPurchase(int tranNo) throws Exception;
 	
 	public Purchase getPurchaseByProdNo(int prodNo) throws Exception;
+//	public Purchase getPurchaseByProdNo(Purchase purchase) throws Exception;
 	
 	public List<Purchase> getPurchaseList(Search search,String buyerId) throws Exception;
 	

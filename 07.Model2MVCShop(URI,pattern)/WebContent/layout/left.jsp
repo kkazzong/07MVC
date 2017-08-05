@@ -70,6 +70,11 @@ function history(){
 					</td>
 				</tr>
 				<tr>
+					<td class="Depth03">
+						<a href="/purchase/listSale?menu=manage"  target="rightFrame">배 송 관 리</a>
+					</td>
+				</tr>
+				<tr>
 					<td class="DepthEnd">&nbsp;</td>
 				</tr>
 			</table>

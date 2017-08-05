@@ -60,11 +60,20 @@
 	
 	<select id="getPurchaseByProdNo" parameterType="int" resultMap="selectPurchaseMap">
 		SELECT
-		p.prod_no, p.prod_name, t.tran_no, t.receiver_name, t.tran_code, t.payment_option, 
-		t.receiver_phone, t.receiver_addr, t.receiver_request
-		,TO_CHAR(t.receiver_date,'yy-mm-dd') receiver_date
-		FROM product p, transaction t
-		WHERE p.prod_no = t.prod_no AND p.prod_no = #{value}
+		p.prod_no,
+		p.prod_name,
+		t.tran_no,
+		t.buyer_id AS user_id,
+		t.receiver_name,
+		t.tran_code,
+		t.payment_option, 
+		t.receiver_phone,
+		t.receiver_addr,
+		t.receiver_request,
+		TO_CHAR(t.receiver_date,'yy-mm-dd') receiver_date
+		FROM product p, transaction t, users u
+		WHERE p.prod_no = t.prod_no 
+			AND p.prod_no = #{value}
 	</select>
 	
 	<update id="updatePurchase" parameterType="com.model2.mvc.service.domain.Purchase">

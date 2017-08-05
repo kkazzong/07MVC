@@ -31,7 +31,6 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		
 		purchase = sqlSession.selectOne("PurchaseMapper.getPurchaseByProdNo", purchase.getPurchaseProd().getProdNo());
 
-		//purchase = this.getPurchaseByProdNo(purchase.getPurchaseProd().getProdNo());
 		return purchase;
 	}
 
@@ -45,6 +44,11 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 		return sqlSession.selectOne("PurchaseMapper.getPurchaseByProdNo", prodNo);
 	}
 
+//	@Override
+//	public Purchase getPurchaseByProdNo(Purchase purchase) throws Exception {
+//		return sqlSession.selectOne("PurchaseMapper.getPurchaseByProdNo", purchase);
+//	}
+	
 	@Override
 	public List<Purchase> getPurchaseList(Search search, String buyerId) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -80,4 +84,5 @@ public class PurchaseDAOImpl implements PurchaseDAO {
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+
 }
