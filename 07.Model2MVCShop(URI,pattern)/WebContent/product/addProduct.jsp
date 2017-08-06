@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%--@ page import="com.model2.mvc.service.domain.*" --%>
 <%--
 <%
@@ -103,7 +104,10 @@
 				<tr>
 					<td height="26">
 						<%--<img src="<%= product.getFileName() %>"/> --%>
-						<img src = "../images/uploadFiles/${product.fileName}"/>
+						<%-- <img src = "../images/uploadFiles/${product.fileName}" width="300" height="300"/> --%>
+						<c:forEach var="fileName" items="${product.fileName}">
+						<img src = "../images/uploadFiles/${fileName}" width="300" height="300"/>
+						</c:forEach>
 					</td>
 				</tr>
 			</table>
