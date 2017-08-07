@@ -21,7 +21,7 @@
 	
 	<!-- List  -->
 	<typeHandlers>
-		<typeHandler handler="com.model2.mvc.common.ListTypeHandler"/>
+		<typeHandler javaType="java.util.List" jdbcType="VARCHAR" handler="com.model2.mvc.common.ListTypeHandler"/>
 	</typeHandlers>
 	
 	 <!-- SQL Definition :: file include -->

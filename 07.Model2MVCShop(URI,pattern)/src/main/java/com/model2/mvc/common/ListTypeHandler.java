@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.impl.Log4JLogger;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
+import org.apache.log4j.lf5.Log4JLogRecord;
 
 public class ListTypeHandler extends BaseTypeHandler<List<String>> {
 
@@ -62,9 +65,7 @@ public class ListTypeHandler extends BaseTypeHandler<List<String>> {
 		
 		return files;
 		} else {
-			List<String> files = new ArrayList<String>();
-			files.add("");
-			return files;
+			return null;
 		}
 	}
 
@@ -83,9 +84,7 @@ public class ListTypeHandler extends BaseTypeHandler<List<String>> {
 			
 			return files;
 			} else {
-				List<String> files = new ArrayList<String>();
-				files.add("");
-				return files;
+				return null;
 			}
 	}
 
@@ -104,21 +103,50 @@ public class ListTypeHandler extends BaseTypeHandler<List<String>> {
 			
 			return files;
 			} else {
-				List<String> files = new ArrayList<String>();
-				files.add("");
-				return files;
+				return null;
 			}
 	}
 
+	/*
+	 * 
+	String sql = "update set prod_no = ?, prod_name = ?, image_file=?";
+	PreparedStatement pStmt = con.prepareStatement(sql);
+	pStmt.setString(4, product.getFileName() ::: return type : List<String>);
+	*
+	*/
+	
+	
 
 	@Override
 	public void setNonNullParameter(PreparedStatement pStmt, int i, List<String> parameter, JdbcType jdbcType)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		//fileName의 파라미터를 List로 casting
+		System.out.println("===========================================");
+		System.out.println("setNonNullParameter : pStmt = "+pStmt+", i = "+i+", parameter = "+parameter);
 		StringBuffer buffer = new StringBuffer(parameter.toString());
+		System.out.println("String buffer : "+buffer.toString());
 		
-				pStmt.setString(i, buffer.substring(1, buffer.length()-1));
+		pStmt.setString(i, buffer.substring(1, buffer.length()-1));
+		System.out.println("===========================================");
+	}
+//
+	@Override
+	public void setParameter(PreparedStatement pStmt, int i, List<String> parameter, JdbcType jdbcType) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("===========================================");
+		System.out.println("setNonNullParameter : pStmt = "+pStmt+", i = "+i+", parameter = "+parameter);
+		if(parameter != null) {
+		StringBuffer buffer = new StringBuffer(parameter.toString());
+		System.out.println("String buffer : "+buffer.toString());
+		
+		super.setParameter(pStmt, i, parameter, jdbcType);
+		pStmt.setString(i, buffer.substring(1, buffer.length()-1));
+		} else {
+			super.setParameter(pStmt, i, parameter, jdbcType);
+			pStmt.setString(i, null);
+		}
+		System.out.println("===========================================");
 	}
 
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 
 public class Product implements Serializable{
+//public class Product {
 	
 /**
 	 * 

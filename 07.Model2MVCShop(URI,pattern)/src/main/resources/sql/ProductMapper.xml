@@ -12,7 +12,9 @@
 		<result property="prodDetail" column="prod_detail" jdbcType="VARCHAR"/>
 		<result property="manuDate" column="manufacture_day" jdbcType="VARCHAR"/>
 		<result property="price" column="price" jdbcType="NUMERIC"/>
-		<result property="fileName" column="image_file" jdbcType="VARCHAR"  javaType="java.util.List" typeHandler="com.model2.mvc.common.ListTypeHandler"/>
+		<!-- <result property="fileName" column="image_file" jdbcType="VARCHAR"  javaType="java.util.List" typeHandler="com.model2.mvc.common.ListTypeHandler"/> -->
+		<result property="fileName" column="image_file" jdbcType="VARCHAR"  javaType="java.util.List"/> 
+		<!-- <result property="fileName" column="image_file" jdbcType="VARCHAR" javaType="java.util.List" typeHandler="com.model2.mvc.common.ListTypeHandlerTwo" />  -->
 		<result property="regDate" column="reg_date" jdbcType="DATE"/>
 		<result property="proTranCode" column="tran_code" jdbcType="VARCHAR"/>
 	</resultMap>
@@ -41,21 +43,11 @@
 	<update id="updateProduct" parameterType="com.model2.mvc.service.domain.Product">
 		UPDATE product
 		<set>
-			<if test="prodName != null">
-				prod_name = #{prodName},
-			</if>
-			<if test="prodDetail != null">
-				prod_detail = #{prodDetail},
-			</if>
-			<if test="price != null">
-				price = #{price},
-			</if>
-			<if test="manuDate != null">
-				manufacture_day = #{manuDate},
-			</if>
-			<if test="fileName != null">
-				image_file = #{fileName},
-			</if>
+			prod_name = #{prodName:VARCHAR},
+			prod_detail = #{prodDetail:VARCHAR},
+			price = #{price},
+			manufacture_day = #{manuDate:DATE},
+			image_file = #{fileName:VARCHAR},
 			reg_date = SYSDATE
 		</set>
  			WHERE prod_no = #{prodNo}

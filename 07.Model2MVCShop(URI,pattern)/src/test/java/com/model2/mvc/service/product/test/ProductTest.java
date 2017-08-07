@@ -1,5 +1,6 @@
 package com.model2.mvc.service.product.test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,10 +64,10 @@ public class ProductTest {
 		Assert.assertNotNull(findProduct);
 	}
 	
-//	@Test
+	@Test
 	public void testUpdateProduct() throws Exception {
 		
-		int prodNo = 10014;
+		int prodNo = 10131;
 		Product product = productDAO.getProduct(prodNo);
 		
 		Product updateProduct = new Product();
@@ -74,9 +75,12 @@ public class ProductTest {
 		
 		//transaction »Æ¿Œ
 //		updateProduct.setProdName(null);
+		List<String> list = new ArrayList<String>();
+		list.add("172643.jpg");
+		list.add("857376.jpg");
 		
 		updateProduct.setProdDetail("ºˆ¡§»Æ¿Œ«œ∞ŸΩø¥Ÿ");
-		
+		updateProduct.setFileName(list);
 		productService.updateProduct(updateProduct);
 		
 		updateProduct = productDAO.getProduct(prodNo);

@@ -172,69 +172,62 @@ public class ProductController {
 	public ModelAndView addProduct(@ModelAttribute("product") Product product, MultipartRequest request,
 			/* @RequestParam("uploadFile") MultipartFile multipartFile, */
 			HttpSession session) throws Exception {
-		
+
 		List<MultipartFile> fileList = request.getFiles("uploadFile");
 		System.out.println(fileList.size());
-		
-	
-			List<String> fileNameList = new ArrayList<String>();
 
+		List<String> fileNameList = new ArrayList<String>();
+
+		if (fileList != null) {
 			for (MultipartFile multipartFile : fileList) {
 				// System.out.println(files.getOriginalFilename());
 				// session.getServletContext().getInitParameter("saveDirectory");
-				if(multipartFile.getOriginalFilename() != "") {
-				String path = session.getServletContext().getInitParameter("saveDirectory");
+				if (multipartFile.getOriginalFilename() != "") {
+					String path = session.getServletContext()
+							.getRealPath(session.getServletContext().getInitParameter("saveDirectory"));
 
-				// session에서 얻은 realPath (산골짜기에 저장..)
-				String realPath = session.getServletContext().getRealPath(path);
+					// session에서 얻은 realPath (산골짜기에 저장..)
+					String realPath = session.getServletContext().getRealPath(path);
 
-				// System.out.println(realPath);
-				// client가 업로드한 파일의 이름
-				String fileName = multipartFile.getOriginalFilename();
-				fileNameList.add(fileName);
-				File file = new File(realPath, fileName);
-				if (file.exists()) {
-					System.out.println("파일존재함");
-					System.out.println("filePath : " + file.getAbsolutePath());
-				} else {
-					System.out.println("파일 존재하지 않음");
-				}
-				multipartFile.transferTo(file);
+					// System.out.println(realPath);
+					// client가 업로드한 파일의 이름
+					String fileName = multipartFile.getOriginalFilename();
+					fileNameList.add(fileName);
+					// File file = new File(realPath, fileName);
+					File file = new File(path, fileName);
+					if (file.exists()) {
+						System.out.println("파일존재함");
+						System.out.println("filePath : " + file.getAbsolutePath());
+					} else {
+						System.out.println("파일 존재하지 않음");
+					}
+					multipartFile.transferTo(file);
 				}
 			}
-
-			product.setFileName(fileNameList);
+		}
+		product.setFileName(fileNameList);
 		product.setManuDate(product.getManuDate().replaceAll("-", ""));
 		System.out.println(product);
 
 		productService.addProduct(product);
 
-/*
- * 
- * 
- * //		 사진한장등록 했을때
-		 if (!multipartFile.isEmpty()) {
-		  web.xml에 등록한 가상의 저장소 위치임
-		// // session.getServletContext().getInitParameter("saveDirectory");
-		 String path =
-		 session.getServletContext().getInitParameter("saveDirectory");
-		// // session에서 얻은 realPath (산골짜기에 저장..)
-		 String realPath = session.getServletContext().getRealPath(path);
-		// // System.out.println(realPath);
-		// // client가 업로드한 파일의 이름
-		 String fileName = multipartFile.getOriginalFilename();
-		
-		 product.setFileName(fileName);
-		 File file = new File(realPath, fileName);
-		 if (file.exists()) {
-		 System.out.println("파일존재함");
-		 System.out.println("filePath : " + file.getAbsolutePath());
-		 } else {
-		 System.out.println("파일 존재하지 않음");
-		 }
-		 multipartFile.transferTo(file);
-		 }*/
-		
+		/*
+		 * 
+		 * 
+		 * // 사진한장등록 했을때 if (!multipartFile.isEmpty()) { web.xml에 등록한 가상의 저장소
+		 * 위치임 // //
+		 * session.getServletContext().getInitParameter("saveDirectory"); String
+		 * path = session.getServletContext().getInitParameter("saveDirectory");
+		 * // // session에서 얻은 realPath (산골짜기에 저장..) String realPath =
+		 * session.getServletContext().getRealPath(path); // //
+		 * System.out.println(realPath); // // client가 업로드한 파일의 이름 String
+		 * fileName = multipartFile.getOriginalFilename();
+		 * 
+		 * product.setFileName(fileName); File file = new File(realPath,
+		 * fileName); if (file.exists()) { System.out.println("파일존재함");
+		 * System.out.println("filePath : " + file.getAbsolutePath()); } else {
+		 * System.out.println("파일 존재하지 않음"); } multipartFile.transferTo(file); }
+		 */
 
 		return new ModelAndView("/product/addProduct.jsp", "product", product);
 	}
@@ -400,9 +393,49 @@ public class ProductController {
 
 	// @RequestMapping("updateProduct.do")
 	@RequestMapping(value = "updateProduct", method = RequestMethod.POST)
-	public ModelAndView updateProduct(@ModelAttribute("product") Product product) throws Exception {
+	public ModelAndView updateProduct(@ModelAttribute("product") Product product, MultipartRequest request,
+			HttpSession session) throws Exception {
 
 		System.out.println("@ updateProduct(POST) @");
+		List<MultipartFile> fileList = request.getFiles("uploadFile");
+		System.out.println(fileList.size());
+
+		List<String> fileNameList = new ArrayList<String>();
+		if (fileList != null) {
+			for (MultipartFile multipartFile : fileList) {
+				// System.out.println(files.getOriginalFilename());
+				// session.getServletContext().getInitParameter("saveDirectory");
+				if (multipartFile.getOriginalFilename() != "") {
+					String path = session.getServletContext()
+							.getRealPath(session.getServletContext().getInitParameter("saveDirectory"));
+					System.out.println(path);
+					// session에서 얻은 realPath (산골짜기에 저장..)
+					String realPath = session.getServletContext().getRealPath(path);
+
+					// System.out.println(realPath);
+					// client가 업로드한 파일의 이름
+					String fileName = multipartFile.getOriginalFilename();
+					System.out.println("fileName : " + fileName);
+
+					fileNameList.add(fileName);
+					// File file = new File(realPath, fileName);
+					File file = new File(path, fileName);
+					/*
+					 * if (file.canWrite()) { System.out.println("파일존재함");
+					 * System.out.println("filePath : " +
+					 * file.getAbsolutePath()); } else {
+					 * System.out.println("파일 존재하지 않음"); }
+					 */
+					if(!file.exists()) {
+						System.out.println("저장소에 없는 파일");
+						multipartFile.transferTo(file);
+					}
+					// }
+				}
+			}
+		}
+		product.setFileName(fileNameList);
+		System.out.println(product);
 
 		product.setManuDate(product.getManuDate().replaceAll("-", ""));
 		productService.updateProduct(product);
@@ -417,8 +450,23 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "deleteProduct")
-	public ModelAndView deleteProduct(@RequestParam("prodNo") int prodNo) throws Exception {
+	public ModelAndView deleteProduct(@RequestParam("prodNo") int prodNo, HttpSession session) throws Exception {
 
+		// 파일저장소에서 파일지우기
+		if (productService.getProduct(prodNo).getFileName() != null) {
+			List<String> fileList = productService.getProduct(prodNo).getFileName();
+			for (String fileName : fileList) {
+				System.out.println("파일이름 : " + fileName);
+				String path = session.getServletContext()
+						.getRealPath(session.getServletContext().getInitParameter("saveDirectory"));
+				System.out.println(path);
+				String realPath = session.getServletContext().getRealPath(path);
+				System.out.println(realPath);
+				File files = new File(path, fileName.trim());
+				System.out.println(files.getAbsolutePath());
+				files.delete();
+			}
+		}
 		System.out.println("deleteProduct");
 		productService.deleteProduct(prodNo);
 
